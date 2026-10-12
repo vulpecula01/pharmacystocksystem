@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-people"></i> จัดการ Users</h4>
+
+  <div class="card p-3 mb-3">
+    <h6>เพิ่ม User ใหม่</h6>
+    <div class="row g-2">
+      <div class="col-md-2"><input class="form-control form-control-sm" id="username" placeholder="Username"></div>
+      <div class="col-md-2"><input type="password" class="form-control form-control-sm" id="password" placeholder="Password"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="fullName" placeholder="ชื่อ-สกุล"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="email" placeholder="Email (ไม่บังคับ)"></div>
+      <div class="col-md-2"><select id="roleSelect" class="form-select form-select-sm"></select></div>
+      <div class="col-md-2"><button class="btn btn-sm btn-success w-100" id="addBtn">เพิ่ม User</button></div>
+    </div>
+    <div class="mt-2">
+      <label class="form-label small">สิทธิ์เข้าถึง Store (เลือกได้หลาย Store)</label>
+      <div id="storeChecks" class="d-flex flex-wrap gap-3"></div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>Username</th><th>ชื่อ-สกุล</th><th>Role</th><th>Store ที่เข้าถึง</th><th>สถานะ</th><th></th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<!-- Modal แก้ไข User -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">แก้ไข User: <span id="eUsername"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <input type="hidden" id="eUserId">
+        <div class="mb-2">
+          <label class="form-label">ชื่อ-สกุล</label>
+          <input class="form-control" id="eFullName">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Email</label>
+          <input class="form-control" id="eEmail">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Role</label>
+          <select id="eRoleSelect" class="form-select"></select>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">รหัสผ่านใหม่ <span class="text-muted">(เว้นว่าง = ไม่เปลี่ยน)</span></label>
+          <input type="password" class="form-control" id="ePassword" placeholder="เว้นว่างถ้าไม่ต้องการเปลี่ยน">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">สิทธิ์เข้าถึง Store</label>
+          <div id="eStoreChecks" class="d-flex flex-wrap gap-3"></div>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="eIsActive">
+          <label class="form-check-label" for="eIsActive">เปิดใช้งานบัญชีนี้</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-primary" id="saveEditBtn">บันทึกการแก้ไข</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin-users.js"></script>
+</body>
+</html>

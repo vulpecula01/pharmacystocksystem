@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-plus-lg"></i> สร้างรายการ Transfer</h4>
+
+  <div class="card p-3 mb-3">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Store ต้นทาง</label>
+        <select id="fromStore" class="form-select"></select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Store ปลายทาง</label>
+        <select id="toStore" class="form-select"></select>
+      </div>
+      <div class="col-12">
+        <label class="form-label">หมายเหตุ</label>
+        <input type="text" id="remark" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-3">
+    <h6>รายการยา</h6>
+    <div class="alert alert-light border small">
+      <i class="bi bi-info-circle"></i> เลือก Lot จากรายการ Stock จริงของ Store ต้นทางเท่านั้น (ป้องกันพิมพ์ Lot/Expired ผิดแล้วระบบเข้าใจว่าเป็นของใหม่จนฟ้องว่าสต๊อกไม่พอ) — ต้องเลือก Store ต้นทางก่อนถึงจะค้นหายาได้
+    </div>
+    <div class="row g-2 align-items-end mb-2">
+      <div class="col-md-4 position-relative">
+        <label class="form-label small">ค้นหายา (เฉพาะยาที่มี Stock ใน Store ต้นทาง)</label>
+        <input type="text" id="drugSearch" class="form-control form-control-sm" placeholder="ชื่อยา/รหัสยา" disabled>
+        <div id="drugSuggest" class="list-group position-absolute" style="z-index:10;max-height:200px;overflow:auto;width:100%;"></div>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small">เลือก Lot</label>
+        <select id="lotSelect" class="form-select form-select-sm" disabled>
+          <option value="">-- เลือกยาก่อน --</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small">จำนวนที่จะโอน</label>
+        <input type="number" step="0.01" id="qty" class="form-control form-control-sm" disabled>
+      </div>
+      <div class="col-md-2"><button class="btn btn-sm btn-success w-100" id="addItemBtn">+ เพิ่มรายการ</button></div>
+    </div>
+    <input type="hidden" id="selectedDrugId">
+    <div id="selectedDrugLabel" class="text-muted small mb-2"></div>
+    <div id="lotAvailableLabel" class="text-muted small mb-2"></div>
+
+    <table class="table table-sm">
+      <thead><tr><th>ยา</th><th>Lot</th><th>Expired</th><th class="text-end">ราคาต้นทุน</th><th class="text-end">จำนวน</th><th></th></tr></thead>
+      <tbody id="itemsBody"></tbody>
+    </table>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-outline-secondary" id="saveDraftBtn">บันทึกเป็น Draft</button>
+    <button class="btn btn-success" id="sendNowBtn">บันทึกและส่ง Transfer</button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/transfers-new.js"></script>
+</body>
+</html>

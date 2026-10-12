@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-capsule"></i> รายการยา (Drug Master)</h4>
+
+  <div class="card p-3 mb-3">
+    <h6>เพิ่มยาใหม่</h6>
+    <div class="row g-2">
+      <div class="col-md-2"><input class="form-control form-control-sm" id="drugCode" placeholder="รหัสยา 14 หลัก" maxlength="14"></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" id="drugName" placeholder="ชื่อยา"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="strengthForm" placeholder="รูปแบบ/Strength"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="unit" placeholder="หน่วยนับ"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="groupName" placeholder="กลุ่มยา"></div>
+      <div class="col-md-1"><button class="btn btn-sm btn-success w-100" id="addBtn">เพิ่ม</button></div>
+    </div>
+  </div>
+
+  <div class="mb-2"><input class="form-control form-control-sm" id="searchBox" placeholder="ค้นหายา..." style="max-width:300px"></div>
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>รหัสยา</th><th>ชื่อยา</th><th>รูปแบบ</th><th>หน่วย</th><th>กลุ่ม</th><th>QR</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<!-- Modal QR -->
+<div class="modal fade" id="qrModal" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content text-center p-3">
+      <img id="qrImg" src="" class="mx-auto">
+      <div id="qrLabel" class="mt-2 small text-muted"></div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin-drugs.js"></script>
+</body>
+</html>

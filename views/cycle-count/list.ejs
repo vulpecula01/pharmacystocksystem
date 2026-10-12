@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container-fluid py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="mb-0"><i class="bi bi-clipboard-check"></i> นับสต๊อกจริง (Cycle Count)</h4>
+    <div class="d-flex gap-2 flex-wrap">
+      <select id="storeSelect" class="form-select form-select-sm" style="width:220px"></select>
+      <button class="btn btn-success btn-sm" id="startCountBtn"><i class="bi bi-plus-circle"></i> เริ่มรอบนับใหม่</button>
+    </div>
+  </div>
+  <div class="alert alert-light border small mb-3">
+    <i class="bi bi-info-circle"></i> ระบบจะดึงยอดคงเหลือปัจจุบันของทุก Lot ในระบบมาให้เทียบ ผู้ใช้กรอกจำนวนที่นับได้จริงทีละ Lot ถ้ายอดไม่ตรงต้องระบุเหตุผล (ของหาย/นับผิด/ยาเสีย/อื่นๆ) เมื่อกด "ปิดรอบนับ" ระบบจะปรับยอดคงเหลือให้ตรงกับที่นับได้จริงให้อัตโนมัติ
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0" id="countTable">
+          <thead class="table-light">
+            <tr>
+              <th>รหัสรอบนับ</th><th>Store</th><th>จำนวนรายการ</th><th>นับแล้ว</th>
+              <th>สถานะ</th><th>ผู้เริ่มนับ</th><th>วันที่เริ่ม</th><th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/cycle-count-list.js"></script>
+</body>
+</html>

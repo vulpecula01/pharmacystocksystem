@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container-fluid py-3">
+  <h4 class="mb-3"><i class="bi bi-clipboard-data"></i> Audit Trail / ประวัติการทำรายการ</h4>
+
+  <div class="card p-3 mb-3">
+    <div class="row g-2">
+      <div class="col-md-2"><input type="date" id="fromDate" class="form-control form-control-sm"></div>
+      <div class="col-md-2"><input type="date" id="toDate" class="form-control form-control-sm"></div>
+      <div class="col-md-2">
+        <select id="actionFilter" class="form-select form-select-sm">
+          <option value="">-- ทุก Action --</option>
+          <option value="LOGIN">LOGIN</option>
+          <option value="LOGOUT">LOGOUT</option>
+          <option value="TRANSFER_CREATE_DRAFT">TRANSFER_CREATE_DRAFT</option>
+          <option value="TRANSFER_SEND">TRANSFER_SEND</option>
+          <option value="TRANSFER_RECEIVE">TRANSFER_RECEIVE</option>
+          <option value="TRANSFER_CANCEL">TRANSFER_CANCEL</option>
+          <option value="STOCK_ISSUE">STOCK_ISSUE</option>
+        </select>
+      </div>
+      <div class="col-md-2"><button class="btn btn-sm btn-primary w-100" id="filterBtn">กรอง</button></div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>วันที่/เวลา</th><th>User</th><th>Action</th><th>Entity</th><th>Store</th><th>รายละเอียด</th><th>IP</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/admin-audit.js"></script>
+</body>
+</html>

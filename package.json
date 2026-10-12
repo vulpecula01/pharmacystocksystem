@@ -1,0 +1,29 @@
+{
+  "name": "pharmacy-stock-system",
+  "version": "1.0.0",
+  "description": "ระบบบริหารจัดการ Inventory ยา/เวชภัณฑ์ - Floor Stock",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:prod": "node scripts/run-with-env.js .env.production",
+    "start:test": "node scripts/run-with-env.js .env.test",
+    "dev": "node --watch server.js",
+    "seed": "node db/seed.js",
+    "seed:prod": "node scripts/seed-with-env.js .env.production",
+    "seed:test": "node scripts/seed-with-env.js .env.test"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.0",
+    "mysql2": "^3.9.7",
+    "qrcode": "^1.5.3"
+  }
+}

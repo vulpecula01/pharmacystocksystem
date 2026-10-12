@@ -1,0 +1,58 @@
+:root {
+  --brand: #0f6e5e;
+  --brand-dark: #0a5346;
+  --danger: #c0392b;
+  --warning: #d98324;
+}
+
+body {
+  background: #f4f6f7;
+  font-family: 'Segoe UI', 'Noto Sans Thai', Tahoma, sans-serif;
+}
+
+.app-navbar {
+  background: linear-gradient(90deg, var(--brand-dark), var(--brand));
+}
+
+.card { border: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-radius: 10px; }
+
+.stat-card { border-radius: 12px; padding: 1.1rem 1.3rem; color: #fff; }
+.stat-card .stat-value { font-size: 1.9rem; font-weight: 700; }
+.stat-card .stat-label { font-size: .85rem; opacity: .9; }
+.stat-card.bg-value { background: #2a78d6; }      /* categorical slot 1 - blue (identity: total value) */
+.stat-card.bg-qty { background: #1baf7a; }         /* categorical slot 3 - aqua (identity: total qty) */
+.stat-card.bg-near { background: #fab219; color:#1a1a19; }   /* status: warning */
+.stat-card.bg-expired { background: #d03b3b; }     /* status: critical */
+.stat-card.bg-min { background: #ec835a; }         /* status: serious */
+.stat-card.bg-pending { background: #52514e; }     /* neutral ink - informational, not a status */
+.stat-card.bg-near .stat-label { color:#1a1a19; opacity:.75; }
+
+.badge-status-DRAFT { background:#898781; }
+.badge-status-TRANSFER_PENDING { background:#fab219; color:#1a1a19; }
+.badge-status-RECEIVED { background:#0ca30c; }
+.badge-status-CANCELLED { background:#d03b3b; }
+
+table.table-sm td, table.table-sm th { vertical-align: middle; font-size: .9rem; }
+
+.login-wrapper {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg,#0a5346,#12876f);
+}
+.login-card { max-width: 400px; width: 100%; border-radius: 14px; }
+
+.scan-box { border: 2px dashed var(--brand); border-radius: 12px; padding: 1rem; }
+#qr-reader { width: 100%; max-width: 420px; margin: 0 auto; }
+
+.expiring-row-EXPIRED { background: rgba(208,59,59,0.10) !important; }
+.expiring-row-NEAR_EXPIRED { background: rgba(250,178,25,0.16) !important; }
+
+/* Dashboard สถานะแผนกแบบเขียว/เหลือง/แดง */
+.status-dot { display:inline-block; width:14px; height:14px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.status-dot-RED { background:#d03b3b; }
+.status-dot-YELLOW { background:#fab219; }
+.status-dot-GREEN { background:#1baf7a; }
+.store-status-card { border-radius:12px; border:1px solid #e5e5e5; padding:1rem; cursor:pointer; transition:box-shadow .15s; }
+.store-status-card:hover { box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.store-status-card.status-RED { border-left:6px solid #d03b3b; }
+.store-status-card.status-YELLOW { border-left:6px solid #fab219; }
+.store-status-card.status-GREEN { border-left:6px solid #1baf7a; }

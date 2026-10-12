@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container-fluid py-3">
+  <h4 class="mb-3"><i class="bi bi-speedometer2"></i> Pharmacy Admin Dashboard</h4>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-2 col-6"><div class="stat-card bg-value"><div class="stat-label">มูลค่า Inventory รวม</div><div class="stat-value" id="statValue">-</div></div></div>
+    <div class="col-md-2 col-6"><div class="stat-card bg-qty"><div class="stat-label">จำนวนคงเหลือรวม</div><div class="stat-value" id="statQty">-</div></div></div>
+    <div class="col-md-2 col-6"><div class="stat-card bg-near"><div class="stat-label">รายการ Near Expiry</div><div class="stat-value" id="statNear">-</div></div></div>
+    <div class="col-md-2 col-6"><div class="stat-card bg-expired"><div class="stat-label">รายการ Expired</div><div class="stat-value" id="statExpired">-</div></div></div>
+    <div class="col-md-2 col-6"><div class="stat-card bg-min"><div class="stat-label">ต่ำกว่า Min</div><div class="stat-value" id="statMin">-</div></div></div>
+    <div class="col-md-2 col-6"><div class="stat-card bg-pending"><div class="stat-label">Transfer รอรับ</div><div class="stat-value" id="statPending">-</div></div></div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h6>มูลค่า Inventory แยกตาม Store</h6>
+        <canvas id="storeValueChart" height="220"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h6>Stock Movement 14 วันล่าสุด</h6>
+        <canvas id="movementChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h6>ยาใกล้หมดอายุ / หมดอายุ (Top 20)</h6>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead><tr><th>Store</th><th>ยา</th><th>Lot</th><th>Expired</th><th class="text-end">เหลือ (วัน)</th></tr></thead>
+            <tbody id="nearExpiryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h6>รายการต่ำกว่า Minimum Stock</h6>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead><tr><th>Store</th><th>ยา</th><th class="text-end">คงเหลือ</th><th class="text-end">Min</th></tr></thead>
+            <tbody id="belowMinBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

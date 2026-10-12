@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-hospital"></i> คลินิกปลายทาง (สำหรับติดตามการส่งยา)</h4>
+  <div class="alert alert-light border small">
+    <i class="bi bi-info-circle"></i> คลินิกที่เพิ่มที่นี่จะใช้เป็นปลายทางของ Transfer และเป็นจุดหมายในระบบติดตามการส่งยาได้
+    กรอกพิกัด (Latitude/Longitude) ถ้าต้องการให้คำนวณ ETA จากตำแหน่ง GPS จริงระหว่างทาง (ไม่กรอกก็ใช้ได้ แต่จะไม่มี ETA แบบ real-time)
+  </div>
+
+  <div class="card p-3 mb-3">
+    <h6>เพิ่มคลินิกใหม่</h6>
+    <div class="row g-2">
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cCode" placeholder="รหัส (เช่น CL01)"></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" id="cName" placeholder="ชื่อคลินิก"></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" id="cAddress" placeholder="ที่อยู่"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cPhone" placeholder="เบอร์ติดต่อ"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cDistance" type="number" step="0.1" placeholder="ระยะทาง (กม.)"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cLat" type="number" step="0.0000001" placeholder="Latitude"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cLng" type="number" step="0.0000001" placeholder="Longitude"></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" id="cSpeed" type="number" step="1" placeholder="ความเร็วเฉลี่ย กม./ชม." value="40"></div>
+      <div class="col-md-2"><button class="btn btn-sm btn-success w-100" id="addBtn">เพิ่มคลินิก</button></div>
+    </div>
+    <div class="form-text mt-1">เคล็ดลับ: หาพิกัด Lat/Lng ได้จาก Google Maps โดยคลิกขวาที่ตำแหน่งคลินิกแล้วเลือกตัวเลขที่ขึ้นมา (ใช้แค่ดูพิกัด ไม่เสียค่าใช้จ่าย)</div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>รหัส</th><th>ชื่อ</th><th>ที่อยู่</th><th>เบอร์ติดต่อ</th><th>ระยะทาง (กม.)</th><th>ความเร็วเฉลี่ย</th><th>พิกัด</th><th>สถานะ</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/admin-clinics.js"></script>
+</body>
+</html>

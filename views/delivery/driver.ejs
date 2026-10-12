@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3" style="max-width:480px;">
+  <h4 class="mb-3"><i class="bi bi-phone"></i> หน้าคนขับ - ส่งยา</h4>
+  <div id="httpsWarning" class="alert alert-danger d-none">
+    <i class="bi bi-exclamation-triangle"></i> หน้านี้เปิดผ่าน HTTP (ไม่ใช่ HTTPS) เบราว์เซอร์ส่วนใหญ่จะ<b>ไม่อนุญาตให้ส่งพิกัด GPS</b>ผ่าน HTTP
+    กรุณาแจ้งผู้ดูแลระบบให้ตั้งค่า HTTPS ให้เซิร์ฟเวอร์ก่อนใช้งานฟีเจอร์นี้จริง
+  </div>
+
+  <div class="card p-3 mb-3">
+    <div class="mb-2"><b>คลินิกปลายทาง:</b> <span id="clinicName">-</span></div>
+    <div class="mb-2 text-muted small" id="clinicAddress"></div>
+    <div class="mb-2"><b>สถานะปัจจุบัน:</b> <span id="statusLabel">-</span></div>
+    <div class="mb-3" id="etaLine"></div>
+
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" id="departBtn"><i class="bi bi-play-fill"></i> เริ่มเดินทาง</button>
+      <button class="btn btn-success d-none" id="arriveBtn"><i class="bi bi-geo-alt-fill"></i> ถึงที่หมายแล้ว</button>
+      <button class="btn btn-outline-danger" id="cancelBtn"><i class="bi bi-x-circle"></i> ยกเลิกรอบนี้</button>
+    </div>
+  </div>
+
+  <div class="alert alert-light border small" id="trackLinkBox"></div>
+</div>
+<script src="/js/common.js"></script>
+<script>window.TRIP_ID = <%= tripId %>;</script>
+<script src="/js/delivery-driver.js"></script>
+</body>
+</html>

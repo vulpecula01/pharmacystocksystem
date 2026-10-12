@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container-fluid py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="mb-0"><i class="bi bi-clipboard-check"></i> รอบนับ #<%= countId %></h4>
+    <div class="d-flex gap-2 flex-wrap">
+      <a href="/cycle-count" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> กลับหน้ารายการ</a>
+      <button class="btn btn-outline-primary btn-sm" id="saveDraftBtn"><i class="bi bi-save"></i> บันทึกยอดที่กรอกไว้</button>
+      <button class="btn btn-outline-danger btn-sm" id="cancelCountBtn"><i class="bi bi-x-circle"></i> ยกเลิกรอบนับ</button>
+      <button class="btn btn-success btn-sm" id="submitCountBtn"><i class="bi bi-check-circle"></i> ปิดรอบนับ (ยืนยันปรับยอด)</button>
+    </div>
+  </div>
+  <div id="countMeta" class="alert alert-light border small mb-3"></div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-sm mb-0" id="itemTable">
+          <thead class="table-light">
+            <tr>
+              <th>ชื่อยา</th><th>Lot</th><th>Expired</th>
+              <th class="text-end">ยอดในระบบ</th>
+              <th class="text-end" style="width:130px">ยอดที่นับได้</th>
+              <th class="text-end">ส่วนต่าง</th>
+              <th style="width:180px">เหตุผล</th>
+              <th>หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.COUNT_ID = <%= countId %>;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/cycle-count-detail.js"></script>
+</body>
+</html>

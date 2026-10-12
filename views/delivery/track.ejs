@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>#map { height: 320px; width: 100%; border-radius: .5rem; }</style>
+</head>
+<body class="bg-light">
+<div class="container py-3" style="max-width:600px;">
+  <h5 class="mb-1"><i class="bi bi-truck"></i> ติดตามการส่งยา</h5>
+  <div class="text-muted small mb-3">Occhealth_BRH - Bangkok Hospital Rayong</div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="small text-muted">Transfer</div>
+          <div class="fw-semibold" id="transferNo">-</div>
+        </div>
+        <div id="statusBadge"></div>
+      </div>
+      <hr>
+      <div class="small text-muted">จาก</div>
+      <div class="mb-2" id="fromStore">-</div>
+      <div class="small text-muted">ถึง</div>
+      <div class="mb-2" id="toStore">-</div>
+      <div id="etaLine" class="fw-semibold"></div>
+    </div>
+  </div>
+
+  <div id="map" class="mb-3"></div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h6 class="mb-2">รายการยาที่จัดส่ง</h6>
+      <ul class="list-group list-group-flush" id="itemsList"></ul>
+    </div>
+  </div>
+
+  <div class="card mb-3" id="confirmCard">
+    <div class="card-body">
+      <h6 class="mb-2"><i class="bi bi-check-circle"></i> ยืนยันการรับยา</h6>
+      <div class="mb-2">
+        <label class="form-label small">ชื่อผู้รับ (ไม่บังคับ)</label>
+        <input type="text" id="receiverName" class="form-control" placeholder="ชื่อ-นามสกุลผู้รับยา">
+      </div>
+      <button class="btn btn-success w-100" id="confirmBtn"><i class="bi bi-check-lg"></i> ยืนยันว่าได้รับยาแล้ว</button>
+    </div>
+  </div>
+
+  <div id="toast" class="alert d-none"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>window.TRACK_TOKEN = <%- JSON.stringify(token) %>;</script>
+<script src="/js/delivery-track.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-sliders"></i> กำหนด Min / Max / Average Usage ต่อ Store</h4>
+
+  <div class="card p-3 mb-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label small">Store</label>
+        <select id="storeSelect" class="form-select form-select-sm"></select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small">ยา</label>
+        <select id="drugSelect" class="form-select form-select-sm"></select>
+      </div>
+      <div class="col-md-1"><label class="form-label small">Min</label><input type="number" id="minQty" class="form-control form-control-sm"></div>
+      <div class="col-md-1"><label class="form-label small">Max</label><input type="number" id="maxQty" class="form-control form-control-sm"></div>
+      <div class="col-md-1"><label class="form-label small">Avg Usage</label><input type="number" id="avgUsage" class="form-control form-control-sm"></div>
+      <div class="col-md-1"><button class="btn btn-sm btn-success w-100" id="saveBtn">บันทึก</button></div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>รหัสยา</th><th>ชื่อยา</th><th>หน่วย</th><th class="text-end">Min</th><th class="text-end">Max</th><th class="text-end">Avg Usage</th><th class="text-end">คงเหลือ</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/admin-config.js"></script>
+</body>
+</html>

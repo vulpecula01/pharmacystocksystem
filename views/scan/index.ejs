@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-upc-scan"></i> Scan QR / Barcode</h4>
+
+  <div class="row g-3">
+    <div class="col-md-5">
+      <div class="card p-3">
+        <label class="form-label">Store</label>
+        <select id="storeSelect" class="form-select mb-3"></select>
+
+        <div class="scan-box text-center mb-3">
+          <select id="cameraSelect" class="form-select form-select-sm mb-2 d-none"></select>
+          <div id="qr-reader"></div>
+          <div id="scanStatus" class="small text-muted mt-1 d-none"><i class="bi bi-camera-video"></i> กำลังสแกน... ชี้กล้องไปที่บาร์โค้ด/QR ให้อยู่ในกรอบ</div>
+          <button class="btn btn-success mt-2" id="startScanBtn"><i class="bi bi-camera"></i> เปิดกล้องสแกน</button>
+          <button class="btn btn-outline-secondary mt-2 d-none" id="stopScanBtn"><i class="bi bi-x-circle"></i> หยุดสแกน</button>
+        </div>
+
+        <label class="form-label">หรือกรอกรหัสยา (14 หลัก) ด้วยตนเอง</label>
+        <div class="input-group">
+          <input type="text" id="manualCode" class="form-control" placeholder="รหัสยา">
+          <button class="btn btn-primary" id="manualLookupBtn">ค้นหา</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="card p-3" id="resultCard" style="display:none;">
+        <h5 id="resDrugName"></h5>
+        <div class="text-muted mb-2" id="resDrugMeta"></div>
+        <table class="table table-sm">
+          <thead><tr><th>Lot</th><th>Expired</th><th class="text-end">คงเหลือ</th><th></th></tr></thead>
+          <tbody id="lotTableBody"></tbody>
+        </table>
+      </div>
+      <div class="text-muted text-center py-5" id="emptyState">สแกน QR/Barcode หรือกรอกรหัสยาเพื่อดูข้อมูล Lot / Expired / คงเหลือ</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ตัดจ่ายจากหน้า Scan -->
+<div class="modal fade" id="issueModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">ยืนยันการตัดจ่าย</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <table class="table table-sm">
+          <tr><td>Lot</td><td id="mLot"></td></tr>
+          <tr><td>Expired</td><td id="mExpired"></td></tr>
+          <tr><td>คงเหลือ</td><td id="mOnHand"></td></tr>
+        </table>
+        <div class="mb-2">
+          <label class="form-label">จำนวนที่จะจ่าย</label>
+          <input type="number" min="0.01" step="0.01" id="mQty" class="form-control">
+        </div>
+        <div class="alert alert-info py-2 mb-0">คงเหลือหลังจ่าย: <span id="mAfter" class="fw-semibold"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-danger" id="confirmIssueBtn">ยืนยันตัดจ่าย</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/scan.js"></script>
+</body>
+</html>

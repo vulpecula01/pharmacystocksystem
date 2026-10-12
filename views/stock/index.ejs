@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container-fluid py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="mb-0"><i class="bi bi-boxes"></i> Stock คงเหลือ / ตัดจ่าย</h4>
+    <div class="d-flex gap-2 flex-wrap">
+      <select id="storeSelect" class="form-select form-select-sm" style="width:220px"></select>
+      <input id="searchBox" class="form-control form-control-sm" style="width:220px" placeholder="ค้นหายา/รหัสยา">
+      <button class="btn btn-success btn-sm" id="openReceiveBtn"><i class="bi bi-box-seam"></i> รับยาเข้า Stock</button>
+      <button class="btn btn-outline-danger btn-sm" id="openFefoBtn"><i class="bi bi-sort-numeric-down"></i> ตัดจ่าย FEFO (ระบุจำนวนรวม)</button>
+    </div>
+  </div>
+  <div class="alert alert-light border small mb-3">
+    <i class="bi bi-info-circle"></i> ตารางด้านล่างเรียง Lot จากใกล้หมดอายุที่สุดไปหาไกลสุดอัตโนมัติ (FEFO) — ปุ่ม "ตัดจ่าย" รายแถวจะตัดจาก Lot นั้นเจาะจง ส่วนปุ่ม "ตัดจ่าย FEFO" ด้านบนให้พิมพ์แค่ชื่อยา+จำนวนรวม ระบบจะไล่ตัดจาก Lot ใกล้หมดอายุที่สุดให้อัตโนมัติ (ตัดข้าม Lot ได้ถ้า Lot เดียวไม่พอ)
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0" id="stockTable">
+          <thead class="table-light">
+            <tr>
+              <th>รหัสยา</th><th>ชื่อยา</th><th>รูปแบบ</th><th>หน่วย</th><th>Lot</th>
+              <th>Expired</th><th class="text-end">คงเหลือ</th><th class="text-end">ราคาต้นทุน</th>
+              <th class="text-end">มูลค่า</th><th>Min/Max</th><th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ตัดจ่าย -->
+<div class="modal fade" id="issueModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">ยืนยันการตัดจ่าย</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <table class="table table-sm">
+          <tr><td>ชื่อยา</td><td id="mDrugName" class="fw-semibold"></td></tr>
+          <tr><td>รหัสยา</td><td id="mDrugCode"></td></tr>
+          <tr><td>Lot</td><td id="mLot"></td></tr>
+          <tr><td>Expired</td><td id="mExpired"></td></tr>
+          <tr><td>จำนวนคงเหลือ</td><td id="mOnHand"></td></tr>
+        </table>
+        <div class="mb-2">
+          <label class="form-label">จำนวนที่จะจ่าย</label>
+          <input type="number" min="0.01" step="0.01" id="mQty" class="form-control">
+        </div>
+        <div class="alert alert-info py-2 mb-0">คงเหลือหลังจ่าย: <span id="mAfter" class="fw-semibold"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-danger" id="confirmIssueBtn">ยืนยันตัดจ่าย</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal รับยาเข้า Stock ใหม่ -->
+<div class="modal fade" id="receiveModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">รับยาเข้า Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-2 position-relative">
+          <label class="form-label">ค้นหายา</label>
+          <input type="text" id="rDrugSearch" class="form-control" placeholder="ชื่อยา/รหัสยา">
+          <div id="rDrugSuggest" class="list-group position-absolute" style="z-index:10;max-height:200px;overflow:auto;width:100%;"></div>
+          <input type="hidden" id="rDrugId">
+          <div id="rDrugLabel" class="text-muted small mt-1"></div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <label class="form-label">Lot No. <span class="text-muted">(เว้นว่างได้ ระบบจะ gen ให้อัตโนมัติ)</span></label>
+            <input type="text" id="rLotNo" class="form-control" placeholder="เว้นว่าง = auto generate">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Expired Date</label>
+            <input type="date" id="rExpDate" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">ราคาต้นทุน/หน่วย</label>
+            <input type="number" step="0.0001" id="rUnitCost" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">จำนวนที่รับเข้า</label>
+            <input type="number" step="0.01" min="0.01" id="rQty" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-success" id="confirmReceiveBtn">ยืนยันรับเข้า</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ตัดจ่ายแบบ FEFO -->
+<div class="modal fade" id="fefoModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">ตัดจ่าย FEFO (ใกล้หมดอายุก่อน)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-2 position-relative">
+          <label class="form-label">ค้นหายา</label>
+          <input type="text" id="fDrugSearch" class="form-control" placeholder="ชื่อยา/รหัสยา">
+          <div id="fDrugSuggest" class="list-group position-absolute" style="z-index:10;max-height:200px;overflow:auto;width:100%;"></div>
+          <input type="hidden" id="fDrugId">
+          <div id="fDrugLabel" class="text-muted small mt-1"></div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">จำนวนที่จะจ่ายรวม</label>
+          <input type="number" step="0.01" min="0.01" id="fQty" class="form-control">
+        </div>
+        <div class="alert alert-warning py-2 mb-0 small">ระบบจะไล่ตัดจาก Lot ที่ใกล้หมดอายุที่สุดก่อนโดยอัตโนมัติ ถ้า Lot เดียวไม่พอจะตัดข้าม Lot ถัดไปให้เอง (แสดงรายละเอียดหลังยืนยัน)</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-danger" id="confirmFefoBtn">ยืนยันตัดจ่าย FEFO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal แก้ไข Lot (Admin เท่านั้น) -->
+<div class="modal fade" id="editLotModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title"><i class="bi bi-pencil-square"></i> แก้ไข Lot / Expired Date</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <table class="table table-sm">
+          <tr><td>ชื่อยา</td><td id="elDrugName" class="fw-semibold"></td></tr>
+          <tr><td>รหัสยา</td><td id="elDrugCode"></td></tr>
+        </table>
+        <input type="hidden" id="elLotId">
+        <div class="row g-2">
+          <div class="col-md-6">
+            <label class="form-label">Lot No.</label>
+            <input type="text" id="elLotNo" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Expired Date</label>
+            <input type="date" id="elExpDate" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">ราคาต้นทุน/หน่วย</label>
+            <input type="number" step="0.0001" id="elUnitCost" class="form-control">
+          </div>
+        </div>
+        <div id="elUsageWarning" class="alert alert-warning py-2 mt-3 mb-0 small d-none"></div>
+        <div id="elMergeWarning" class="alert alert-info py-2 mt-2 mb-0 small d-none"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-primary" id="confirmEditLotBtn">บันทึกการแก้ไข</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.IS_ADMIN = <%= (currentUser && (currentUser.role_code === 'PHARMACY_ADMIN' || currentUser.role_code === 'SUPER_ADMIN')) ? 'true' : 'false' %>;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/stock.js"></script>
+</body>
+</html>

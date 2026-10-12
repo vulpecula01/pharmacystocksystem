@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-shop"></i> จัดการ Store</h4>
+
+  <div class="card p-3 mb-3">
+    <h6>เพิ่ม Store ใหม่</h6>
+    <div class="row g-2">
+      <div class="col-md-2"><input class="form-control form-control-sm" id="storeCode" placeholder="รหัส Store"></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" id="storeName" placeholder="ชื่อ Store"></div>
+      <div class="col-md-3">
+        <select id="storeType" class="form-select form-select-sm">
+          <option value="MAIN_PHARMACY">Main Pharmacy</option>
+          <option value="FLOOR_STOCK">Floor Stock</option>
+          <option value="EMERGENCY_BAG">Emergency Bag</option>
+          <option value="SUB_STORE">Sub Store</option>
+        </select>
+      </div>
+      <div class="col-md-3"><input class="form-control form-control-sm" id="storeLocation" placeholder="ที่ตั้ง (ไม่บังคับ)"></div>
+      <div class="col-md-1"><button class="btn btn-sm btn-success w-100" id="addBtn">เพิ่ม</button></div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white">
+    <thead><tr><th>รหัส</th><th>ชื่อ</th><th>ประเภท</th><th>ที่ตั้ง</th><th>สถานะ</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/admin-stores.js"></script>
+</body>
+</html>

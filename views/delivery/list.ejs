@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<div class="container py-3">
+  <h4 class="mb-3"><i class="bi bi-truck"></i> ติดตามการส่งยาไปคลินิก</h4>
+  <div class="alert alert-light border small">
+    <i class="bi bi-info-circle"></i> เลือก Transfer ที่ปลายทางเป็นคลินิก (สร้างไว้แล้วในเมนู Transfer) มาสร้างเป็น "รอบส่งยา"
+    ระบบจะสร้างลิงก์ติดตามสถานะให้ส่งต่อให้คลินิก (ทาง LINE/SMS) และคนขับกดเปิดหน้าจอมือถือของตัวเองเพื่อส่งพิกัด GPS ระหว่างทาง
+  </div>
+
+  <div class="card p-3 mb-3">
+    <h6>สร้างรอบส่งยาใหม่</h6>
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label small mb-1">Transfer (ปลายทางคลินิก, รอส่ง)</label>
+        <select id="tTransfer" class="form-select form-select-sm"></select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small mb-1">คนขับ</label>
+        <select id="tDriver" class="form-select form-select-sm"></select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small mb-1">ทะเบียนรถ (ไม่บังคับ)</label>
+        <input class="form-control form-control-sm" id="tVehicle" placeholder="เช่น กข-1234">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small mb-1">ความเร็วเฉลี่ย (กม./ชม.)</label>
+        <input class="form-control form-control-sm" id="tSpeed" type="number" placeholder="ใช้ค่า default ของคลินิก">
+      </div>
+      <div class="col-md-1"><button class="btn btn-sm btn-success w-100" id="createBtn">สร้าง</button></div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover bg-white align-middle">
+    <thead><tr>
+      <th>Transfer</th><th>ต้นทาง</th><th>ปลายทาง (คลินิก)</th><th>คนขับ</th><th>สถานะ</th>
+      <th>ระยะทางคงเหลือ</th><th>ETA</th><th>ลิงก์ติดตาม</th><th></th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/delivery-list.js"></script>
+</body>
+</html>

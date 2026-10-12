@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="th">
+<head><%- include('partials/head') %></head>
+<body>
+  <div class="login-wrapper">
+    <div class="card login-card p-4">
+      <div class="text-center mb-3">
+        <i class="bi bi-capsule" style="font-size:2.5rem;color:#0f6e5e;"></i>
+        <h4 class="mt-2 mb-0">ระบบ Inventory ยา/เวชภัณฑ์</h4>
+        <div class="text-muted small">Floor Stock</div>
+      </div>
+      <% if (error) { %>
+        <div class="alert alert-danger py-2"><%= error %></div>
+      <% } %>
+      <form method="post" action="/login">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" required autofocus>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-semibold" href="/">
+      <i class="bi bi-capsule"></i> Pharmacy Inventory
+      <span class="badge bg-light text-dark ms-1">Occhealth_BRH</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if (currentUser) { %>
+          <li class="nav-item"><a class="nav-link <%= activePage==='dashboard'?'active':'' %>" href="/dashboard"><i class="bi bi-house-door"></i> หน้าหลัก</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='stock'?'active':'' %>" href="/stock"><i class="bi bi-boxes"></i> Stock / ตัดจ่าย</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='scan'?'active':'' %>" href="/scan"><i class="bi bi-upc-scan"></i> Scan</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='transfers'?'active':'' %>" href="/transfers"><i class="bi bi-arrow-left-right"></i> Transfer</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='reports'?'active':'' %>" href="/reports"><i class="bi bi-file-earmark-bar-graph"></i> Reports</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='ai'?'active':'' %>" href="/ai"><i class="bi bi-stars"></i> ผู้ช่วย AI</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='delivery'?'active':'' %>" href="/delivery"><i class="bi bi-truck"></i> ติดตามการส่งยา</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='replenishment'?'active':'' %>" href="/replenishment"><i class="bi bi-arrow-repeat"></i> ใบขอเบิกอัตโนมัติ</a></li>
+          <li class="nav-item"><a class="nav-link <%= activePage==='cycle-count'?'active':'' %>" href="/cycle-count"><i class="bi bi-clipboard-check"></i> นับสต๊อกจริง</a></li>
+          <% if (currentUser.role_code === 'PHARMACY_ADMIN' || currentUser.role_code === 'SUPER_ADMIN') { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle <%= activePage && activePage.startsWith('admin')?'active':'' %>" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-shield-lock"></i> Admin
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+              <li><a class="dropdown-item" href="/admin/stores">Stores</a></li>
+              <li><a class="dropdown-item" href="/admin/drugs">รายการยา (Drug Master)</a></li>
+              <li><a class="dropdown-item" href="/admin/config">Min/Max ต่อ Store</a></li>
+              <li><a class="dropdown-item" href="/admin/clinics">คลินิกปลายทาง (Delivery)</a></li>
+              <li><a class="dropdown-item" href="/admin/users">Users</a></li>
+              <li><a class="dropdown-item" href="/admin/audit-log">Audit Log</a></li>
+            </ul>
+          </li>
+          <% } %>
+        <% } %>
+      </ul>
+      <% if (currentUser) { %>
+      <span class="navbar-text text-white-50 me-3 small">
+        <%= currentUser.full_name %> (<%= currentUser.role_name %>)
+      </span>
+      <form action="/logout" method="post" class="d-inline">
+        <button class="btn btn-outline-light btn-sm" type="submit"><i class="bi bi-box-arrow-right"></i> ออกจากระบบ</button>
+      </form>
+      <% } %>
+    </div>
+  </div>
+</nav>
